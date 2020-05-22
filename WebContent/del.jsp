@@ -10,69 +10,8 @@
 <html lang="zh">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>学生数据库管理系统</title>
- <style>
-* {
-	margin: 0;
-	padding: 0;
-}
-body {
-	overflow: hidden;
-}
-</style> 
-<link href="css/font.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/style-search.css" media="screen" type="text/css" />
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<style>
-	*{
-	   	color:white;
-	   	margin:0px;
-	   	position:0px;
-	}
-	#d{
-		padding:10px;
-		position: absolute;
-		top: 30%;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 400px;
-		height: 400px;	
-		padding-left:150px;
-		 
-	}
-	#nid{
-		position: fixed;
-		margin-top:10px;
-		text-align:left;
-	}
-	#pid{
-		position: fixed;
-		margin-top:110px;
-		text-align:left;
-	}
-	#sid{
-		position:fixed;
-		margin-top:210px;
-		text-align:left;
-	}
-	.input {
-	 /*  z-index: 2; */
-	  font-size: 20px;
-	  font-family: helvetica, sans-serif;
-	  background: none;
-	  border: 1px solid #ddd;
-	  color: #eee;
-	}
-</style>
 </head>
-<body>
-	<canvas id="canvas" width="1280" height="1024"> 您的浏览器不支持canvas标签，请您更换浏览器 </canvas>
-	<script src="js/word.js"></script>
-	<p id="offscreen-text" class="offscreen-text"></p>
-	<p id="text" class="text"></p>
-	
- 	<div id="d" class="webdesigntuts-workshop"> 
+<body>	
 		<%
 			String URL="jdbc:mysql://localhost:3306/studentmanagement?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8";
 			String USERNAME = "root";
@@ -124,8 +63,5 @@ body {
 				}
 			}
 		%>
-	 </div>
-	<script  src='js/index.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js"></script>
 </body>
 </html>
