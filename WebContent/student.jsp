@@ -1,0 +1,376 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.PreparedStatement" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>学生信息管理</title>
+	<link rel="stylesheet" type="text/css" href="css/default.css">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,700">
+  	<link rel="stylesheet" href="css/style.min.css">
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
+	<style type="text/css">
+			.glyphicon { margin-right:5px; }
+			.btn-wrapper{
+				padding: 1em 0;
+			}
+			.thumbnail
+			{
+			    margin-bottom: 20px;
+			    padding: 0px;
+			    -webkit-border-radius: 0px;
+			    -moz-border-radius: 0px;
+			    border-radius: 0px;
+			}
+	
+			.item.list-group-item
+			{
+			    float: none;
+			    width: 100%;
+			    background-color: #fff;
+			    margin-bottom: 10px;
+			}
+			.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+			{
+			    background: #428bca;
+			}
+	
+			.item.list-group-item .list-group-image
+			{
+			    margin-right: 10px;
+			}
+			.item.list-group-item .thumbnail
+			{
+			    margin-bottom: 0px;
+			}
+			.item.list-group-item .caption
+			{
+			    padding: 9px 9px 0px 9px;
+			}
+			.item.list-group-item:nth-of-type(odd)
+			{
+			    background: #eeeeee;
+			}
+			.item.list-group-item:before, .item.list-group-item:after
+			{
+			    display: table;
+			    content: " ";
+			}
+	
+			.item.list-group-item img
+			{
+			    float: left;
+			}
+			.item.list-group-item:after
+			{
+			    clear: both;
+			}
+			.list-group-item-text
+			{
+			    margin: 0 0 11px;
+			}
+			.htmleaf-header{
+				background-color: #CDDC39;
+				background:url("https://pic2.zhimg.com/80/1d4b229e2e625a236a57fb44b67f6f7b_720w.jpg");
+				background-size:100%;
+			}
+			body{
+				background-color:white;
+				color: #000000;
+			}
+			#footer{
+			        bottom: 20px;
+				    position: fixed;
+				    text-align: center;
+				    left: 38%;
+			    
+			}
+			.btn-wrapper{
+				    text-align: center;
+			}
+			.thumbnail {
+				padding: 10px;
+			}
+			.col-md-6 {
+				text-align: center;
+			}
+			.item.list-group-item {
+				left: 10%;
+				width: 80%;
+			}
+	</style>
+	<style type="text/css">
+		#table th {
+		    display: block;
+		    width: 50px;
+		}
+		#table tr {
+		    display: inline-flex;
+		    margin-top: 10px;
+		    margin-bottom:10px;
+			margin-left: 60px;
+			font-size: 16px;
+		}
+		input{
+			border-radius: 5px;
+		}
+		.input1 {
+		   margin-left: 67px;
+		    margin-right: 60px;
+		}
+		.change{
+		    left: 800px;
+			display: block;
+	        margin-left: 750px;
+	        margin-top:100px;
+		}
+		.input2{
+		   width: 300px;
+		   text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="wrapper" class="wrapper">
+		<header class="header htmleaf-header">
+			<h1>学生信息管理<span>Welcome to our system</span></h1>
+		</header>
+	  <main>
+				<div class="container">
+					<div class="btn-wrapper">
+						<strong>显示为：</strong>
+						<div class="btn-group">
+							<a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+							</span>列表布局</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+								class="glyphicon glyphicon-th"></span>网格布局</a>
+						</div>
+					</div>
+					<div id="products" class="row list-group">
+					
+					<%
+						String URL="jdbc:mysql://localhost:3306/studentmanagement?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8";
+						String USERNAME = "root";
+						String PWD="";
+						
+						Connection connection = null;
+						PreparedStatement pStmt=null;
+						ResultSet re=null;
+				  
+						try 
+						{
+							// 导入驱动，加载具体的驱动类
+							Class.forName("com.mysql.jdbc.Driver");// 加载驱动类
+							// 与数据库建立连接
+							connection = DriverManager.getConnection(URL, USERNAME, PWD);
+							// 发送sql，执行
+							if(request.getParameter("id")!=null)
+							{
+									String sql = "select * from student where sno=?";
+									pStmt = connection.prepareStatement(sql);//预编译
+									request.setCharacterEncoding("utf-8");
+									String id=request.getParameter("id");
+									pStmt.setString(1, id);
+								    re=pStmt.executeQuery();
+									if(re.next())
+									{
+										%>
+										
+											<form class="change" action="editsave.jsp"  onsubmit="return is_empty()" method="post">
+												<table id="table" style="width:50%">
+													<tr>
+														<th width="30%">姓名：</th>
+														<td width="70%">
+															<input name="name"  class="input2 Safe" type="text" value="<%=re.getString("name")%>"></input>
+														</td>
+													</tr>
+													<tr>
+														<th>性别：</th>
+														<td>
+															<input name="gender" class="input2 Safe" type="text" value="<%=re.getString("gender")%>"></input>
+														</td>
+													</tr>
+													<tr>
+														<th>生日：</th>
+														<td>
+															<input name="birthday" class="input2 Safe" type="text" value="<%=re.getString("birthday")%>"></input>
+														</td>
+													</tr>
+													<tr>
+														<th>地址：</th>
+														<td>
+															<input name="address" class="input2 Safe" type="text" value="<%=re.getString("address")%>"></input>
+														</td>
+													</tr>
+													<tr>
+														<th></th>
+														<td>
+															<input type="hidden" name="id" value="<%=id%>"></input>
+														</td>	
+													</tr>
+													<tr>
+														<th></th>
+														<td>
+															<input type="submit" class="input1" value="修改"></input>
+															<input type="reset" value="重置"></input>
+														</td>
+													</tr>
+												</table>
+											</form>
+											<script type="text/javascript">
+												 function is_empty()
+												   {
+													   var len=document.getElementsByClassName('Safe').length;
+													   for (i=0;i<len;++i)
+													   {
+														   if(document.getElementsByClassName('Safe')[i].value=="")
+														   {
+																alert("输入不为空");
+																break;
+																return false;
+														   }
+	
+													   }
+													   return true;						   	   
+												   }
+											</script>
+										<%
+									}										
+								}
+							else
+							{
+								String sql = "select * from student";
+								pStmt = connection.prepareStatement(sql);//预编译
+								re=pStmt.executeQuery();
+								while(re.next())
+								{
+									int id=re.getInt("sno");
+									String name=re.getString("name");
+									String gender=re.getString("gender");
+									String birthday=re.getString("birthday");
+									String address=re.getString("address");
+									
+									response.setContentType("text/html; charset=UTF-8");
+									response.setCharacterEncoding("utf-8");
+									out.print("<div class=\"item  col-xs-4 col-lg-4\">"+
+												"<div class=\"thumbnail\">"+
+										        "<img class=\"group list-group-image\" src=\"img/link-fox.png\" alt=\"\" />"+
+										        "<div class=\"caption\">"+
+										            "<h4 class=\"group inner list-group-item-heading\">"+name+"</h4>"+
+														"<ul>"+
+															"<li>"+gender+"</li>"+
+															"<li>"+birthday+"</li>"+
+															"<li>"+address+"</li>"+
+														"</ul>"+
+										           "<p class=\"group inner list-group-item-text\">"+
+										                "Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,"+
+										                "sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>"+
+										            "<div class=\"row\">"+
+										                "<div class=\"col-xs-12 col-md-6\">"+
+										                    "<a class=\"btn btn-success\"  onclick=\"displayWindow()\" href=\"student.jsp?id="+id+"\">修改</a>"+
+										                "</div>"+
+														"<div class=\"col-xs-12 col-md-6\">"+
+														    "<a class=\"btn btn-success\" href=\"del.jsp?id="+id+"\">删除</a>"+
+														"</div>"+
+										            "</div>"+
+										        "</div>"+
+										      "</div>"+
+										   "</div>");
+									
+								}
+							}
+						} 
+						catch (ClassNotFoundException e) 
+						{
+							e.printStackTrace();
+						}
+						catch (SQLException e)
+						{
+							e.printStackTrace();
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
+						finally 
+						{
+							try
+							{
+								if(re!=null) re.close();
+								if(pStmt!=null)	pStmt.close();
+								if(connection!=null)	connection.close();
+							}catch(SQLException e)
+							{
+								e.printStackTrace();
+							}catch(Exception e)
+							{
+								e.printStackTrace();
+							}
+						}
+					%>
+					</div>
+			</div>
+	  </main>
+	</div><!-- /wrapper -->
+
+	<button id="mm-menu-toggle" class="mm-menu-toggle">Toggle Menu</button>
+	<nav id="mm-menu" class="mm-menu">
+	  <div class="mm-menu__header">
+	    <h2 class="mm-menu__title">Hello Administrator</h2>
+	  </div>
+	  <ul class="mm-menu__items">
+	    <li class="mm-menu__item">
+	      <a class="mm-menu__link" href="index.jsp">
+	        <span class="mm-menu__link-text"><i class="md md-home"></i>主页</span>
+	      </a>
+	    </li>
+	    <li class="mm-menu__item">
+	      <a class="mm-menu__link" href="student.jsp">
+	        <span class="mm-menu__link-text"><i class="md md-person"></i>学生信息管理</span>
+	      </a>
+	    </li>
+	    <li class="mm-menu__item">
+	      <a class="mm-menu__link" href="#">
+	        <span class="mm-menu__link-text"><i class="md md-inbox"></i>教师信息管理</span>
+	      </a>
+	    </li>
+	    <li class="mm-menu__item">
+	      <a class="mm-menu__link" href="insert.jsp">
+	        <span class="mm-menu__link-text"><i class="md md-favorite"></i>添加信息</span>
+	      </a>
+	    </li>
+	    <li class="mm-menu__item">
+	      <a class="mm-menu__link" href="#">
+	        <span class="mm-menu__link-text"><i class="md md-settings"></i>系统设置</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav><!-- /nav -->
+	
+	<script src="js/production/materialMenu.min.js"></script>
+	<script>
+	  var menu = new Menu;
+	</script>
+	<script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+		    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+		});
+	</script>
+	<footer id="footer">
+		Copyright &copy; 2019.Company name All rights reserved.公网安备xxxxx号京ICP证xxx号 <!-- 假的备案，能在本机环境允许 -->
+	</footer><!-- footer -->
+</body>
+</html>
