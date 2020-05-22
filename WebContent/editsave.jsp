@@ -12,7 +12,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
- 	<div id="d" class="webdesigntuts-workshop"> 
 		<%
 			String URL="jdbc:mysql://localhost:3306/studentmanagement?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8";
 			String USERNAME = "root";
