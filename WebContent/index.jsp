@@ -44,8 +44,8 @@
 			<header class="header htmleaf-header">
 				<h1>欢迎登陆<span>Welcome to our system</span></h1>
 				<div class="htmleaf-links">
-					<a class="htmleaf-icon icon-htmleaf-home-outline" href="#" target="_blank"><span> jQuery之家</span></a>
-					<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="#" title="返回下载页" target="_blank"><span> 返回下载页</span></a>
+					<a class="htmleaf-icon icon-htmleaf-home-outline" href="#" target="_blank"><span></span></a>
+					<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="#" title="" target="_blank"><span> </span></a>
 				</div>
 			</header>
 			<div class="content content--fox">
