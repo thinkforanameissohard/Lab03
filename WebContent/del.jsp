@@ -24,28 +24,6 @@ body {
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/style-search.css" media="screen" type="text/css" />
 <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script type="text/javascript">
-	   function is_empty()
-	   {
-		   var n=document.getElementById("name").value;
-		   var p=document.getElementById("pwd").value;
-		   if(!n||n=="请输入用户名")
-		   {
-		   		alert("用户名不为空");
-		   		return false;
-		   }
-		   else if(!p||p=="请输入密码")
-	   		{
-			   alert("密码不为空");
-	   			return false;
-	   		}
-		   else
-		   {
-			   return true;	
-		   }	   
-	   }
-	   		
-</script> 
 <style>
 	*{
 	   	color:white;
