@@ -272,8 +272,8 @@
 															"<li>"+address+"</li>"+
 														"</ul>"+
 										           "<p class=\"group inner list-group-item-text\">"+
-										                "Product description... Lorem ipsum dolor sit amet, consectetuer adipiscing elit,"+
-										                "sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>"+
+										                 "I heard the echo, from the valleys and the heart.Open to the lonely soul of sickle harvesting."+
+										                 "Repeat outrightly, but also repeat the well-being of.Eventually swaying in the desert oasis.</p>"+
 										            "<div class=\"row\">"+
 										                "<div class=\"col-xs-12 col-md-6\">"+
 										                    "<a class=\"btn btn-success\"  onclick=\"displayWindow()\" href=\"student.jsp?id="+id+"\">修改</a>"+
